@@ -1,0 +1,23 @@
+pip install transformers
+
+from transformers import GPT2LMHeadModel,GPT2Tokenizer
+model=GPT2LMHeadModel.from_pretrained("gpt2")
+tokenizer=GPT2Tokenizer.from_pretrained("gpt2")
+
+prompt="amypo technology is providing industrial training for students"
+
+input_ids=tokenizer.encode(prompt,return_tensors="pt")
+output= model.generate(
+    input_ids,
+    max_length=60,
+    num_return_sequences=2,
+    do_sample=True,
+    top_k=60,
+    temperature=0.7
+    )
+
+print("generated text:")
+for i,sequence in enumerate(output):
+  print(f"sequence:{i+1}")
+  generated_text=tokenizer.decode(sequence,skip_special_tokens=True)
+  print(generated_text)
